@@ -1,4 +1,3 @@
-# Write your code below game_hash
 def game_hash
   {
     home: {
@@ -126,4 +125,94 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored player_name
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if attrib == :players
+        data.each do |player, stats|
+          if player[:player_name] == player_name
+            return player[:points]
+          end
+        end
+      end
+    end
+  end
+end
+
+def shoe_size player_name
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if attrib == :players
+        data.each do |player, stats|
+          if player[:player_name] == player_name
+            return player[:shoe]
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors team_name
+  game_hash.each do |location, team_info|
+    if team_info[:team_name] == team_name
+      return team_info[:colors]
+    end
+  end
+end
+
+def team_names
+  arr = []
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if attrib == :team_name
+        arr << data
+      end
+    end
+  end
+  p arr
+end
+
+def player_numbers team_name
+  arr = []
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if data == team_name
+        team_info[:players].each do |k, v|
+          arr << k[:number]
+        end
+      end
+    end
+  end
+  return arr
+end
+
+player_numbers "Brooklyn Nets"
+
+def player_stats player_name
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if attrib == :players
+        data.each do |player, stats|
+          if player[:player_name] == player_name
+            return player
+          end
+        end
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  players = []
+  game_hash.each do |location, team_info|
+    team_info.each do |attrib, data|
+      if attrib == :players
+        players << data
+      end
+    end
+  end
+  players[0].sort_by { |hash| hash[:shoe] }.last[:rebounds]
+end
+
+big_shoe_rebounds
